@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -34,9 +34,16 @@ const SigninForm = (props: SigninFormProps) => {
 
   const [showPass, setShowPass] = useState(false);
 
+  const emailRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (emailRef.current) emailRef.current.focus();
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
+        inputRef={emailRef}
         error={!(errors.email == null)}
         helperText={
           errors.email?.message ? String(errors.email.message) : null
@@ -94,7 +101,7 @@ const SigninForm = (props: SigninFormProps) => {
           fullWidth
           loading={loading}
         >
-          Sign In
+          Log In
         </LoadingButton>
       </Box>
 

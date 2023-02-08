@@ -1,9 +1,11 @@
-import SigninPage from "./pages/SigninPage";
+import { RouterProvider } from "react-router-dom";
+
+import router from "./routes";
 
 const App = () => {
   return (
     <>
-      <SigninPage />
+      <RouterProvider router={router} />
     </>
   );
 };

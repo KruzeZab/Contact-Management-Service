@@ -6,7 +6,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useAppSelector } from "../../../../app/hooks";
 import {
@@ -36,9 +36,16 @@ const SignupForm = (props: SignupFormProps) => {
   // State
   const [showPass, setShowPass] = useState(false);
 
+  const fnameRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (fnameRef.current) fnameRef.current.focus();
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
+        inputRef={fnameRef}
         {...register("fname", {
           validate: {
             ...fnameValidate,
