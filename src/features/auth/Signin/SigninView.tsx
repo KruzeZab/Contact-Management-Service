@@ -1,17 +1,23 @@
+import { FormProvider, useForm } from "react-hook-form";
 import { Box } from "@mui/material";
 
-import SigninMeta from "./SigninMeta";
-import SigninForm from "./SigninForm";
+import SigninMeta from "./renders/SigninMeta";
+import SigninForm from "./renders/SigninForm";
 
 const SigninView = () => {
+  const rhf = useForm({ mode: "onBlur" });
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
-    <>
-      {/* Main Form */}
-      <Box>
-        <SigninMeta />
-        <SigninForm />
-      </Box>
-    </>
+    <Box>
+      <SigninMeta />
+      <FormProvider {...rhf}>
+        <SigninForm onSubmit={onSubmit} />
+      </FormProvider>
+    </Box>
   );
 };
 

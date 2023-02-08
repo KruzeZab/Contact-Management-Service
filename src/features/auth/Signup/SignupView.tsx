@@ -1,14 +1,22 @@
 import { Box } from "@mui/material";
-import SignupForm from "./SignupForm";
-import SignupMeta from "./SignupMeta";
+import { FormProvider, useForm } from "react-hook-form";
+import SignupForm from "./renders/SignupForm";
+import SignupMeta from "./renders/SignupMeta";
 
 const SignupView = () => {
+  const rhf = useForm({ mode: "onBlur" });
+
+  const onSubmit = (values: any) => {
+    console.log(values);
+  };
   return (
     <>
       {/* Main Form */}
       <Box>
         <SignupMeta />
-        <SignupForm />
+        <FormProvider {...rhf}>
+          <SignupForm onSubmit={onSubmit} />
+        </FormProvider>
       </Box>
 
       {/* Image Banner */}
