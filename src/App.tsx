@@ -1,10 +1,9 @@
-// import SigninPage from "./pages/SigninPage";
-import SignupPage from "./pages/SignupPage";
+import SigninPage from "./pages/SigninPage";
 
 const App = () => {
   return (
     <>
-      <SignupPage />
+      <SigninPage />
     </>
   );
 };

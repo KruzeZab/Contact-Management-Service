@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -8,11 +9,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { useFormContext } from "react-hook-form";
 import {
   emailValidate,
   passwordValidate,
 } from "../helpers/SigninHelpers";
+import { useAppSelector } from "../../../../app/hooks";
 
 interface SigninFormProps {
   onSubmit: (data: any) => void;
@@ -21,11 +24,15 @@ interface SigninFormProps {
 const SigninForm = (props: SigninFormProps) => {
   const { onSubmit } = props;
 
+  const { loading } = useAppSelector((state) => state.auth);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useFormContext();
+
+  const [showPass, setShowPass] = useState(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,6 +54,7 @@ const SigninForm = (props: SigninFormProps) => {
       />
 
       <TextField
+        type={showPass ? "text" : "password"}
         error={!(errors.password == null)}
         helperText={
           errors.password?.message
@@ -66,21 +74,28 @@ const SigninForm = (props: SigninFormProps) => {
       />
 
       <FormControlLabel
-        control={<Checkbox />}
+        control={
+          <Checkbox
+            onChange={() => {
+              setShowPass((pass) => !pass);
+            }}
+          />
+        }
         label="Show Password"
         color="primary"
       />
 
       {/* CTA */}
       <Box mt={2} mb={2}>
-        <Button
+        <LoadingButton
+          type="submit"
           variant="contained"
+          color="primary"
           fullWidth
-          size="small"
-          disableElevation
+          loading={loading}
         >
-          Login
-        </Button>
+          Sign In
+        </LoadingButton>
       </Box>
 
       <Divider />

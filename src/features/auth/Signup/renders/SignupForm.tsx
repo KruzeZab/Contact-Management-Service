@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Checkbox,
@@ -5,7 +6,9 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useAppSelector } from "../../../../app/hooks";
 import {
   emailValidate,
   fnameValidate,
@@ -27,6 +30,11 @@ const SignupForm = (props: SignupFormProps) => {
     getValues,
     formState: { errors },
   } = useFormContext();
+
+  const { loading } = useAppSelector((state) => state.auth);
+
+  // State
+  const [showPass, setShowPass] = useState(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -83,6 +91,7 @@ const SignupForm = (props: SignupFormProps) => {
 
       <Stack direction="row" spacing={2} mt={2} mb={2}>
         <TextField
+          type={showPass ? "text" : "password"}
           {...register("password", {
             validate: {
               ...passwordValidate,
@@ -95,6 +104,7 @@ const SignupForm = (props: SignupFormProps) => {
         />
 
         <TextField
+          type={showPass ? "text" : "password"}
           {...register("cfmPassword", {
             validate: {
               matches: (value: string) => {
@@ -102,7 +112,6 @@ const SignupForm = (props: SignupFormProps) => {
                   return "Passwords do not match";
                 return true;
               },
-              ...passwordValidate,
             },
           })}
           error={!(errors.cfmPassword == null)}
@@ -115,7 +124,13 @@ const SignupForm = (props: SignupFormProps) => {
       {passwordMessage(errors)}
 
       <FormControlLabel
-        control={<Checkbox />}
+        control={
+          <Checkbox
+            onChange={() => {
+              setShowPass((pass) => !pass);
+            }}
+          />
+        }
         label="Show Password"
         color="primary"
       />
@@ -128,9 +143,15 @@ const SignupForm = (props: SignupFormProps) => {
         alignItems="center"
       >
         <Button>Sign in Instead</Button>
-        <Button variant="contained" size="small" disableElevation>
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          size="small"
+          disableElevation
+          loading={loading}
+        >
           Create Account
-        </Button>
+        </LoadingButton>
       </Stack>
     </form>
   );
