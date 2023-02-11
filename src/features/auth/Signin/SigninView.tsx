@@ -9,7 +9,7 @@ import SigninMeta from "./renders/SigninMeta";
 import SigninForm from "./renders/SigninForm";
 
 const SigninView = () => {
-  const rhf = useForm({ mode: "onBlur" });
+  const rhf = useForm();
 
   const navigate = useNavigate();
   const location = useLocation();

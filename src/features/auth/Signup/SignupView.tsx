@@ -7,7 +7,7 @@ import SignupForm from "./renders/SignupForm";
 import SignupMeta from "./renders/SignupMeta";
 
 const SignupView = () => {
-  const rhf = useForm({ mode: "onBlur" });
+  const rhf = useForm();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

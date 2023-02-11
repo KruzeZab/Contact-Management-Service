@@ -25,13 +25,13 @@ interface SigninFormProps {
 const SigninForm = (props: SigninFormProps) => {
   const { onSubmit } = props;
 
-  const { loading } = useAppSelector((state) => state.auth);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useFormContext();
+
+  const { loading } = useAppSelector((state) => state.auth);
 
   const [showPass, setShowPass] = useState(false);
 

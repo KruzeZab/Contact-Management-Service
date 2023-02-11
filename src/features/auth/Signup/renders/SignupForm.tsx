@@ -29,6 +29,7 @@ const SignupForm = (props: SignupFormProps) => {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
@@ -42,6 +43,13 @@ const SignupForm = (props: SignupFormProps) => {
   useEffect(() => {
     if (fnameRef.current) fnameRef.current.focus();
   }, []);
+
+  const handleInstantChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+    setValue(name, value, { shouldValidate: true });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -82,6 +90,7 @@ const SignupForm = (props: SignupFormProps) => {
 
       <TextField
         {...register("email", {
+          onBlur: handleInstantChange,
           validate: {
             ...emailValidate,
           },
