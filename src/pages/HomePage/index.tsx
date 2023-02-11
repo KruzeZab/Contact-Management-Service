@@ -1,7 +1,17 @@
-import React from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase.config";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  const handleLogout = () => {
+    signOut(auth);
+  };
+
+  return (
+    <div>
+      HomePage
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  );
 };
 
 export default HomePage;

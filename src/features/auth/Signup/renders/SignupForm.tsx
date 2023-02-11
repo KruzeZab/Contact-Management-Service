@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 import { useAppSelector } from "../../../../app/hooks";
 import {
@@ -149,7 +150,9 @@ const SignupForm = (props: SignupFormProps) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Button>Sign in Instead</Button>
+        <Button component={RouterLink} to="/login">
+          Sign in Instead
+        </Button>
         <LoadingButton
           type="submit"
           variant="contained"

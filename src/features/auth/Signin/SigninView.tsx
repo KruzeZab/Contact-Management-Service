@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Box, LinearProgress } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
@@ -12,6 +12,9 @@ const SigninView = () => {
   const rhf = useForm({ mode: "onBlur" });
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const dispatch = useAppDispatch();
 
   const { loading, error } = useAppSelector((state) => state.auth);
@@ -19,7 +22,7 @@ const SigninView = () => {
   const onSubmit = (values: any) => {
     dispatch(loginUser(values)).then(() => {
       rhf.reset();
-      navigate("/");
+      navigate(from);
     });
   };
 

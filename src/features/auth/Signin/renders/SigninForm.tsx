@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { Link as RouterLink } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 import {
   emailValidate,
@@ -109,7 +110,10 @@ const SigninForm = (props: SigninFormProps) => {
 
       <Box textAlign="center" p={0.5}>
         <Typography variant="body1" fontSize={16}>
-          Dont have an account? <Button>Join Now</Button>
+          Dont have an account?{" "}
+          <Button to="/signup" component={RouterLink}>
+            Join Now
+          </Button>
         </Typography>
       </Box>
     </form>

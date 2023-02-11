@@ -6,19 +6,21 @@ import {
 import SigninPage from "../pages/SigninPage";
 import SignupPage from "../pages/SignupPage";
 import HomePage from "../pages/HomePage";
+import PrivateRoute from "../hoc/PrivateRoute";
+import ProtectedRoute from "../hoc/ProtectedRoute";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <HomePage />,
+    element: <PrivateRoute component={HomePage} />,
   },
   {
     path: "/login",
-    element: <SigninPage />,
+    element: <ProtectedRoute component={SigninPage} />,
   },
   {
     path: "/signup",
-    element: <SignupPage />,
+    element: <ProtectedRoute component={SignupPage} />,
   },
 ];
 

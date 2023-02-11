@@ -7,7 +7,7 @@ import store from "./app/store";
 
 // Custom
 import App from "./App";
-import AuthHandler from "./components/AuthHandler";
+import AuthSuscriber from "./components/AuthSuscriber";
 import reportWebVitals from "./reportWebVitals";
 
 // CSS
@@ -25,7 +25,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AuthHandler />
+      <AuthSuscriber />
       <App />
     </Provider>
   </React.StrictMode>

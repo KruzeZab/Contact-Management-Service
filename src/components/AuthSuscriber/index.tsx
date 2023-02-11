@@ -8,8 +8,6 @@ import { auth } from "../../firebase.config";
 const AuthProvider = () => {
   const dispatch = useAppDispatch();
 
-  // const { user } = useAppSelector((state) => state.auth);
-
   useEffect(() => {
     const unsuscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
