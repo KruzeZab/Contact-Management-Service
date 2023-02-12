@@ -24,6 +24,7 @@ import {
   Settings as SettingsIcon,
   HelpOutline as HelpOutlineIcon,
   ArrowBack as ArrowBackIcon,
+  Apps as AppsIcon,
 } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -114,9 +115,15 @@ const Header = () => {
           <HelpOutlineIcon sx={{ color: "#5F6368" }} />
         </IconButton>
       </Tooltip>
-      <Tooltip title="settings">
+
+      <Tooltip title="settings" sx={{ mr: 1 }}>
         <IconButton color="inherit">
           <SettingsIcon sx={{ color: "#5F6368" }} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Github">
+        <IconButton color="inherit">
+          <AppsIcon sx={{ color: "#5F6368" }} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Account settings">
@@ -189,7 +196,7 @@ const Header = () => {
               <FormControl variant="standard" fullWidth>
                 <SearchInput
                   onBlur={handleSearchClose}
-                  autoFocus
+                  autoFocus={!isDesktop}
                   type="search"
                   size="small"
                   placeholder="Search"
