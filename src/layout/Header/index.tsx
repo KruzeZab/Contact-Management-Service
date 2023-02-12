@@ -1,8 +1,9 @@
+import PropTypes from "prop-types";
+
 import {
   AppBar,
   Avatar,
   Box,
-  Divider,
   FormControl,
   IconButton,
   InputBase,
@@ -16,6 +17,7 @@ import {
   InputAdornment,
   useMediaQuery,
   useTheme,
+  Link as MuiLink,
 } from "@mui/material";
 
 import {
@@ -26,10 +28,12 @@ import {
   ArrowBack as ArrowBackIcon,
   Apps as AppsIcon,
 } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 
 const SearchInput = styled(InputBase)(({ theme }) => ({
-  backgroundColor: "#F1F3F4",
+  backgroundColor:
+    theme.palette.mode === "dark" ? "#292929" : "#f1f3f4",
   padding: "0 8px",
 
   "& .MuiInputBase-input": {
@@ -39,12 +43,17 @@ const SearchInput = styled(InputBase)(({ theme }) => ({
   },
 
   "&:focus-within": {
-    backgroundColor: "white",
+    backgroundColor:
+      theme.palette.mode === "dark" ? "#373737" : "white",
     boxShadow: theme.shadows[1],
   },
 }));
 
-const Header = () => {
+interface HeaderProps {
+  onDrawerToggle: () => void;
+}
+
+const Header = ({ onDrawerToggle }: HeaderProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   // For mobile device
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -112,18 +121,18 @@ const Header = () => {
     <>
       <Tooltip title="Help" sx={{ mr: 1 }}>
         <IconButton color="inherit">
-          <HelpOutlineIcon sx={{ color: "#5F6368" }} />
+          <HelpOutlineIcon />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="settings" sx={{ mr: 1 }}>
         <IconButton color="inherit">
-          <SettingsIcon sx={{ color: "#5F6368" }} />
+          <SettingsIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title="Github">
         <IconButton color="inherit">
-          <AppsIcon sx={{ color: "#5F6368" }} />
+          <AppsIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title="Account settings">
@@ -155,13 +164,18 @@ const Header = () => {
       <AppBar
         position="static"
         elevation={0}
-        sx={{ bgcolor: "common.white", color: "text.primary" }}
+        sx={{
+          bgcolor: "background.paper",
+          color: "text.primary",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
       >
         <Toolbar>
           {(isDesktop || !showSearchBar) && (
             <>
               {/* Hamburger Icon */}
               <IconButton
+                onClick={onDrawerToggle}
                 size="large"
                 edge="start"
                 color="inherit"
@@ -171,28 +185,31 @@ const Header = () => {
                 <MenuIcon />
               </IconButton>
               {/* Logo */}
-              <Stack direction="row" alignItems="center" mr={3}>
-                <img
-                  src="./logo.png"
-                  alt="Google Keep"
-                  width={40}
-                  height={40}
-                  style={{ marginRight: 7 }}
-                />
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  fontSize={22}
-                >
-                  Contacts
-                </Typography>
-              </Stack>
+              <MuiLink
+                to="/"
+                underline="none"
+                color="inherit"
+                component={RouterLink}
+              >
+                <Stack direction="row" alignItems="center" mr={3}>
+                  <img
+                    src="./logo.png"
+                    alt="Google Keep"
+                    width={40}
+                    height={40}
+                    style={{ marginRight: 7 }}
+                  />
+                  <Typography variant="body1" fontSize={22} noWrap>
+                    Contacts
+                  </Typography>
+                </Stack>
+              </MuiLink>
             </>
           )}
 
           {/* Searchbar */}
           {(isDesktop || showSearchBar) && (
-            <Box ml={{ xs: 0, md: 4 }} mr={2} flexGrow={1}>
+            <Box ml={{ xs: 0, md: 10 }} mr={2} flexGrow={1}>
               <FormControl variant="standard" fullWidth>
                 <SearchInput
                   onBlur={handleSearchClose}
@@ -205,7 +222,7 @@ const Header = () => {
               </FormControl>
             </Box>
           )}
-          {!showSearchBar && <Box flexGrow={{ xs: 1, lg: 2 }} />}
+          {!showSearchBar && <Box flexGrow={{ xs: 1, lg: 1.5 }} />}
 
           {/* Right Menu */}
           <Box>
@@ -218,7 +235,7 @@ const Header = () => {
                   color="inherit"
                   onClick={handleSearchOpen}
                 >
-                  <SearchIcon sx={{ color: "#5F6368" }} />
+                  <SearchIcon />
                 </IconButton>
               </Tooltip>
             )}
@@ -228,9 +245,12 @@ const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Divider />
     </>
   );
+};
+
+Header.proptypes = {
+  onDrawerToggle: PropTypes.func.isRequired,
 };
 
 export default Header;

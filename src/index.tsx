@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 
 // Redux
 import { Provider } from "react-redux";
-import store from "./app/store";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 // Custom
+import store from "./app/store";
 import App from "./App";
 import AuthSuscriber from "./components/AuthSuscriber";
 import reportWebVitals from "./reportWebVitals";
+import theme from "./theme";
 
 // CSS
 import "./index.css";
@@ -25,8 +27,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AuthSuscriber />
-      <App />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AuthSuscriber />
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );

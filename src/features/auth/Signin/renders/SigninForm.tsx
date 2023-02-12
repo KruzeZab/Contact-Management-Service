@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
-  Button,
   Checkbox,
   Divider,
   FormControlLabel,
+  Link as MuiLink,
   TextField,
   Typography,
 } from "@mui/material";
@@ -108,12 +108,16 @@ const SigninForm = (props: SigninFormProps) => {
 
       <Divider />
 
-      <Box textAlign="center" p={0.5}>
+      <Box textAlign="center" p={1.5}>
         <Typography variant="body1" fontSize={16}>
           Dont have an account?{" "}
-          <Button to="/signup" component={RouterLink}>
+          <MuiLink
+            underline="none"
+            to="/signup"
+            component={RouterLink}
+          >
             Join Now
-          </Button>
+          </MuiLink>
         </Typography>
       </Box>
     </form>
