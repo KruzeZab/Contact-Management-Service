@@ -36,19 +36,24 @@ const SearchInput = styled(InputBase)(({ theme }) => ({
     padding: "7px 0",
     border: "none",
   },
+
+  "&:focus-within": {
+    backgroundColor: "white",
+    boxShadow: theme.shadows[1],
+  },
 }));
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  // For mobile device
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
   const open = Boolean(anchorEl);
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
-  // For mobile device
-  const [showSearchBar, setShowSearchBar] = useState(false);
-
-  const handleClick = (
+  const handleProfileClick = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     setAnchorEl(event.currentTarget);
@@ -85,6 +90,58 @@ const Header = () => {
       );
     }
   };
+
+  const renderProfileMenu = (
+    <Menu
+      id="basic-menu"
+      anchorEl={anchorEl}
+      open={open}
+      onClose={handleMenuClose}
+      MenuListProps={{
+        "aria-labelledby": "profile-menu",
+      }}
+    >
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Change Avatar</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+    </Menu>
+  );
+
+  const renderRightMenu = (
+    <>
+      <Tooltip title="Help" sx={{ mr: 1 }}>
+        <IconButton color="inherit">
+          <HelpOutlineIcon sx={{ color: "#5F6368" }} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="settings">
+        <IconButton color="inherit">
+          <SettingsIcon sx={{ color: "#5F6368" }} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Account settings">
+        <IconButton
+          onClick={handleProfileClick}
+          disableRipple
+          size="small"
+          sx={{ ml: 2 }}
+          aria-controls={open ? "account-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+        >
+          <Avatar
+            sx={{
+              width: 26,
+              height: 26,
+              bgcolor: "orangered",
+            }}
+          >
+            K
+          </Avatar>
+        </IconButton>
+      </Tooltip>
+    </>
+  );
 
   return (
     <>
@@ -144,7 +201,6 @@ const Header = () => {
           {!showSearchBar && <Box flexGrow={{ xs: 1, lg: 2 }} />}
 
           {/* Right Menu */}
-
           <Box>
             {(!showSearchBar || isDesktop) && (
               <Tooltip
@@ -159,55 +215,9 @@ const Header = () => {
                 </IconButton>
               </Tooltip>
             )}
-            <Tooltip title="Help" sx={{ mr: 1 }}>
-              <IconButton color="inherit">
-                <HelpOutlineIcon sx={{ color: "#5F6368" }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="settings">
-              <IconButton color="inherit">
-                <SettingsIcon sx={{ color: "#5F6368" }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                disableRipple
-                size="small"
-                sx={{ ml: 2 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <Avatar
-                  sx={{
-                    width: 26,
-                    height: 26,
-                    bgcolor: "orangered",
-                  }}
-                >
-                  K
-                </Avatar>
-              </IconButton>
-            </Tooltip>
+            {renderRightMenu}
 
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleMenuClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleMenuClose}>
-                My account
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                Change Avatar
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-            </Menu>
+            {renderProfileMenu}
           </Box>
         </Toolbar>
       </AppBar>
