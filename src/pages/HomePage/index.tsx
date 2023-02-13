@@ -1,6 +1,5 @@
 // import { signOut } from "firebase/auth";
 // import { auth } from "../../firebase.config";
-
 import Layout from "../../layout";
 
 const HomePage = () => {
@@ -11,7 +10,6 @@ const HomePage = () => {
   return (
     <div>
       <Layout />
-
       {/* <button onClick={handleLogout}>Logout</button> */}
     </div>
   );

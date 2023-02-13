@@ -14,7 +14,6 @@ import {
   ListItemText,
   styled,
   Toolbar,
-  useMediaQuery,
 } from "@mui/material";
 import {
   ExpandMore as ExpandMoreIcon,
@@ -31,6 +30,7 @@ import {
 
 interface SidebarProps {
   open: boolean;
+  onDrawerToggle: () => void;
 }
 
 const PrimaryButton = styled(Button)(({ theme }) => ({
@@ -46,28 +46,13 @@ const PrimaryButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Sidebar = ({ open }: SidebarProps) => {
+const Sidebar = ({ open, onDrawerToggle }: SidebarProps) => {
   const [labelsExpanded, setLabelsExpanded] = useState(false);
-  const isSmallScreen = useMediaQuery("(max-width:900px)");
 
   const drawerWidth = 300;
 
-  return (
-    <Drawer
-      sx={{
-        width: drawerWidth,
-
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          borderWidth: 0,
-        },
-      }}
-      variant="persistent"
-      anchor="left"
-      open={isSmallScreen ? false : open}
-    >
+  const drawer = (
+    <>
       <Toolbar />
       <Box sx={{ overflow: "auto" }}>
         <List>
@@ -80,7 +65,7 @@ const Sidebar = ({ open }: SidebarProps) => {
         <List dense>
           {/* Quick Actions */}
           {quickActions.map(({ text, icon }, index) => (
-            <ListItem key={text} sx={{ pl: 0 }}>
+            <ListItem key={text} sx={{ px: 0 }}>
               <ListItemButton selected={index === 0}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -91,7 +76,7 @@ const Sidebar = ({ open }: SidebarProps) => {
         <Divider />
         {/* Labels */}
         <List dense>
-          <ListItem sx={{ pl: 0 }}>
+          <ListItem sx={{ px: 0 }}>
             <ListItemButton
               onClick={() => {
                 setLabelsExpanded((expanded) => !expanded);
@@ -123,7 +108,7 @@ const Sidebar = ({ open }: SidebarProps) => {
 
           {/* View & Add Label */}
 
-          <ListItem sx={{ pl: 0 }}>
+          <ListItem sx={{ px: 0 }}>
             <ListItemButton>
               <ListItemIcon>
                 <AddIcon />
@@ -132,13 +117,11 @@ const Sidebar = ({ open }: SidebarProps) => {
             </ListItemButton>
           </ListItem>
         </List>
-
         <Divider />
-
         {/* Socials */}
         <List dense>
           {socialLinks.map(({ text, icon }, index) => (
-            <ListItem key={text} sx={{ pl: 0 }}>
+            <ListItem key={text} sx={{ px: 0 }}>
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -146,13 +129,11 @@ const Sidebar = ({ open }: SidebarProps) => {
             </ListItem>
           ))}
         </List>
-
         <Divider />
-
         {/* Communicate */}
         <List dense>
           {communicate.map(({ text, icon }) => (
-            <ListItem key={text} sx={{ pl: 0 }}>
+            <ListItem key={text} sx={{ px: 0 }}>
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -160,13 +141,11 @@ const Sidebar = ({ open }: SidebarProps) => {
             </ListItem>
           ))}
         </List>
-
         <Divider />
-
         {/* App Info */}
         <List dense>
           {appInfo.map(({ text, icon }) => (
-            <ListItem key={text} sx={{ pl: 0 }}>
+            <ListItem key={text} sx={{ px: 0 }}>
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -175,12 +154,59 @@ const Sidebar = ({ open }: SidebarProps) => {
           ))}
         </List>
       </Box>
-    </Drawer>
+    </>
+  );
+
+  return (
+    <>
+      <Drawer
+        sx={{
+          display: { xs: "block", md: "none" },
+          width: drawerWidth,
+
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            borderWidth: 0,
+          },
+        }}
+        variant="temporary"
+        anchor="left"
+        open={open}
+        onClose={onDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+        }}
+      >
+        {drawer}
+      </Drawer>
+      <Drawer
+        sx={{
+          display: { xs: "none", md: "block" },
+          width: drawerWidth,
+
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            borderWidth: 0,
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        onClose={onDrawerToggle}
+      >
+        {drawer}
+      </Drawer>
+    </>
   );
 };
 
 Sidebar.propTypes = {
   open: PropTypes.bool.isRequired,
+  onDrawerToggle: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

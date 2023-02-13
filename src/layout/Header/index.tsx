@@ -50,15 +50,16 @@ const SearchInput = styled(InputBase)(({ theme }) => ({
 }));
 
 interface HeaderProps {
+  open: boolean;
   onDrawerToggle: () => void;
 }
 
-const Header = ({ onDrawerToggle }: HeaderProps) => {
+const Header = ({ open, onDrawerToggle }: HeaderProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   // For mobile device
   const [showSearchBar, setShowSearchBar] = useState(false);
 
-  const open = Boolean(anchorEl);
+  const anchorOpen = Boolean(anchorEl);
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
@@ -105,7 +106,7 @@ const Header = ({ onDrawerToggle }: HeaderProps) => {
     <Menu
       id="basic-menu"
       anchorEl={anchorEl}
-      open={open}
+      open={anchorOpen}
       onClose={handleMenuClose}
       MenuListProps={{
         "aria-labelledby": "profile-menu",
@@ -117,47 +118,60 @@ const Header = ({ onDrawerToggle }: HeaderProps) => {
     </Menu>
   );
 
-  const renderRightMenu = (
-    <>
-      <Tooltip title="Help" sx={{ mr: 1 }}>
-        <IconButton color="inherit">
-          <HelpOutlineIcon />
-        </IconButton>
-      </Tooltip>
-
-      <Tooltip title="settings" sx={{ mr: 1 }}>
-        <IconButton color="inherit">
-          <SettingsIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Github">
-        <IconButton color="inherit">
-          <AppsIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Account settings">
-        <IconButton
-          onClick={handleProfileClick}
-          disableRipple
-          size="small"
-          sx={{ ml: 2 }}
-          aria-controls={open ? "account-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-        >
-          <Avatar
-            sx={{
-              width: 26,
-              height: 26,
-              bgcolor: "orangered",
-            }}
+  const renderRightMenu = () => {
+    return (
+      <Box>
+        {(!showSearchBar || isDesktop) && (
+          <Tooltip
+            title="Search"
+            sx={{ mr: 1, display: { md: "none" } }}
           >
-            K
-          </Avatar>
-        </IconButton>
-      </Tooltip>
-    </>
-  );
+            <IconButton color="inherit" onClick={handleSearchOpen}>
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        <Tooltip title="Help" sx={{ mr: 1 }}>
+          <IconButton color="inherit">
+            <HelpOutlineIcon />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="settings" sx={{ mr: 1 }}>
+          <IconButton color="inherit">
+            <SettingsIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Github">
+          <IconButton color="inherit">
+            <AppsIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleProfileClick}
+            disableRipple
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+          >
+            <Avatar
+              sx={{
+                width: 26,
+                height: 26,
+                bgcolor: "orangered",
+              }}
+            >
+              K
+            </Avatar>
+          </IconButton>
+        </Tooltip>
+        {renderProfileMenu}
+      </Box>
+    );
+  };
 
   return (
     <>
@@ -171,7 +185,7 @@ const Header = ({ onDrawerToggle }: HeaderProps) => {
         }}
       >
         <Toolbar>
-          {(isDesktop || !showSearchBar) && (
+          {!showSearchBar && (
             <>
               {/* Hamburger Icon */}
               <IconButton
@@ -225,24 +239,8 @@ const Header = ({ onDrawerToggle }: HeaderProps) => {
           {!showSearchBar && <Box flexGrow={{ xs: 1, lg: 1.5 }} />}
 
           {/* Right Menu */}
-          <Box>
-            {(!showSearchBar || isDesktop) && (
-              <Tooltip
-                title="Search"
-                sx={{ mr: 1, display: { md: "none" } }}
-              >
-                <IconButton
-                  color="inherit"
-                  onClick={handleSearchOpen}
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Tooltip>
-            )}
-            {renderRightMenu}
 
-            {renderProfileMenu}
-          </Box>
+          {(!open || isDesktop) && renderRightMenu()}
         </Toolbar>
       </AppBar>
     </>
@@ -250,6 +248,7 @@ const Header = ({ onDrawerToggle }: HeaderProps) => {
 };
 
 Header.proptypes = {
+  open: PropTypes.bool.isRequired,
   onDrawerToggle: PropTypes.func.isRequired,
 };
 
