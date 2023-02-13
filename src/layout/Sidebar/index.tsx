@@ -1,7 +1,9 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import {
+  alpha,
   Box,
+  Button,
   Collapse,
   Divider,
   Drawer,
@@ -10,7 +12,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  styled,
   Toolbar,
+  useMediaQuery,
 } from "@mui/material";
 import {
   ExpandMore as ExpandMoreIcon,
@@ -29,8 +33,23 @@ interface SidebarProps {
   open: boolean;
 }
 
+const PrimaryButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "#9c27b0",
+  color: "#fff",
+  boxShadow: theme.shadows[1],
+  borderRadius: theme.spacing(1),
+  padding: theme.spacing(1.5, 4),
+  textTransform: "none",
+
+  "&:hover": {
+    backgroundColor: alpha("#9c27b0", 0.8),
+  },
+}));
+
 const Sidebar = ({ open }: SidebarProps) => {
   const [labelsExpanded, setLabelsExpanded] = useState(false);
+  const isSmallScreen = useMediaQuery("(max-width:900px)");
+
   const drawerWidth = 300;
 
   return (
@@ -47,14 +66,21 @@ const Sidebar = ({ open }: SidebarProps) => {
       }}
       variant="persistent"
       anchor="left"
-      open={open}
+      open={isSmallScreen ? false : open}
     >
       <Toolbar />
       <Box sx={{ overflow: "auto" }}>
+        <List>
+          <ListItem>
+            <PrimaryButton color="secondary" startIcon={<AddIcon />}>
+              Create Contact
+            </PrimaryButton>
+          </ListItem>
+        </List>
         <List dense>
           {/* Quick Actions */}
           {quickActions.map(({ text, icon }, index) => (
-            <ListItem key={text}>
+            <ListItem key={text} sx={{ pl: 0 }}>
               <ListItemButton selected={index === 0}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -65,7 +91,7 @@ const Sidebar = ({ open }: SidebarProps) => {
         <Divider />
         {/* Labels */}
         <List dense>
-          <ListItem>
+          <ListItem sx={{ pl: 0 }}>
             <ListItemButton
               onClick={() => {
                 setLabelsExpanded((expanded) => !expanded);
@@ -97,7 +123,7 @@ const Sidebar = ({ open }: SidebarProps) => {
 
           {/* View & Add Label */}
 
-          <ListItem>
+          <ListItem sx={{ pl: 0 }}>
             <ListItemButton>
               <ListItemIcon>
                 <AddIcon />
@@ -112,7 +138,7 @@ const Sidebar = ({ open }: SidebarProps) => {
         {/* Socials */}
         <List dense>
           {socialLinks.map(({ text, icon }, index) => (
-            <ListItem key={text}>
+            <ListItem key={text} sx={{ pl: 0 }}>
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -126,7 +152,7 @@ const Sidebar = ({ open }: SidebarProps) => {
         {/* Communicate */}
         <List dense>
           {communicate.map(({ text, icon }) => (
-            <ListItem key={text}>
+            <ListItem key={text} sx={{ pl: 0 }}>
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -140,7 +166,7 @@ const Sidebar = ({ open }: SidebarProps) => {
         {/* App Info */}
         <List dense>
           {appInfo.map(({ text, icon }) => (
-            <ListItem key={text}>
+            <ListItem key={text} sx={{ pl: 0 }}>
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
