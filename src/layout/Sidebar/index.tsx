@@ -31,6 +31,7 @@ import {
 interface SidebarProps {
   open: boolean;
   onDrawerToggle: () => void;
+  drawerWidth: number;
 }
 
 const PrimaryButton = styled(Button)(({ theme }) => ({
@@ -38,7 +39,7 @@ const PrimaryButton = styled(Button)(({ theme }) => ({
   color: "#fff",
   boxShadow: theme.shadows[1],
   borderRadius: theme.spacing(1),
-  padding: theme.spacing(1.5, 4),
+  padding: theme.spacing(1.2, 3),
   textTransform: "none",
 
   "&:hover": {
@@ -46,10 +47,12 @@ const PrimaryButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Sidebar = ({ open, onDrawerToggle }: SidebarProps) => {
+const Sidebar = ({
+  open,
+  onDrawerToggle,
+  drawerWidth,
+}: SidebarProps) => {
   const [labelsExpanded, setLabelsExpanded] = useState(false);
-
-  const drawerWidth = 300;
 
   const drawer = (
     <>
@@ -207,6 +210,7 @@ const Sidebar = ({ open, onDrawerToggle }: SidebarProps) => {
 Sidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   onDrawerToggle: PropTypes.func.isRequired,
+  drawerWidth: PropTypes.number.isRequired,
 };
 
 export default Sidebar;
