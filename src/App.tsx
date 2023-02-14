@@ -3,6 +3,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import PrivateRoute from "./hoc/PrivateRoute";
+import ProtectedRoute from "./hoc/ProtectedRoute";
 import Layout from "./layout/Layout";
 
 import HomePage from "./pages/HomePage";
@@ -13,13 +15,24 @@ const App = () => {
   return (
     <>
       <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<SigninPage />} />
-            <Route path="/register" element={<SignupPage />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route
+            path="/login"
+            element={<ProtectedRoute component={SigninPage} />}
+          />
+          <Route
+            path="/register"
+            element={<PrivateRoute component={SignupPage} />}
+          />
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <PrivateRoute component={HomePage} />
+              </Layout>
+            }
+          />
+        </Routes>
       </Router>
     </>
   );
