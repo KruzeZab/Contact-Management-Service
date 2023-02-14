@@ -22,7 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   const { user } = useAppSelector((state) => state.auth);
 
-  const drawerWidth = user ? 280 : 0;
+  const drawerWidth = 280;
 
   const onDrawerToggle = () => {
     setOpen((prev) => !prev);

@@ -8,7 +8,7 @@ export const Main = styled("main", {
   drawerwidth: number;
 }>(({ theme, open, drawerwidth }) => ({
   flexGrow: 1,
-  padding: theme.spacing(0),
+  padding: theme.spacing(3),
 
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,

@@ -1,4 +1,5 @@
 import { signOut } from "firebase/auth";
+import Contacts from "../../features/Contacts";
 import { auth } from "../../firebase.config";
 
 const HomePage = () => {
@@ -7,10 +8,10 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      <h1>Hello world</h1>
+    <>
+      <Contacts />
       <button onClick={handleLogout}>Logout</button>
-    </div>
+    </>
   );
 };
 

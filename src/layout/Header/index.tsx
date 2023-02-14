@@ -176,15 +176,16 @@ const Header = ({ open, onDrawerToggle }: HeaderProps) => {
   return (
     <>
       <AppBar
-        position="static"
+        position="sticky"
         elevation={0}
         sx={{
+          width: "100%",
           bgcolor: "background.paper",
           color: "text.primary",
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ width: "100%" }}>
           {!showSearchBar && (
             <>
               {/* Hamburger Icon */}

@@ -18,8 +18,11 @@
         "ignoreKeywords": ["/theme.*/"]
       }
     ],
-    "property-no-unknown": [true, {
-      "ignoreProperties": ["should-forward-prop"]
-    }]
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": ["should-forward-prop"]
+      }
+    ]
   }
 }
