@@ -1,24 +1,13 @@
 import { Alert, Box, LinearProgress, Stack } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import createUser from "../apis/createUser";
 import SignupForm from "./renders/SignupForm";
 import SignupMeta from "./renders/SignupMeta";
 
 const SignupView = () => {
   const rhf = useForm();
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const { loading, error } = useAppSelector((state) => state.auth);
-
   const onSubmit = (values: any) => {
-    dispatch(createUser(values)).then(() => {
-      rhf.reset();
-      navigate("/");
-    });
+    rhf.reset();
   };
 
   return (
@@ -31,7 +20,7 @@ const SignupView = () => {
         m={2}
       >
         {/* Loading indicator */}
-        {loading && <LinearProgress />}
+        <LinearProgress />
 
         {/* Form and Banner */}
         <Stack
@@ -41,11 +30,11 @@ const SignupView = () => {
         >
           <Box>
             <SignupMeta />
-            {error && (
-              <Alert variant="filled" severity="error">
-                {error}
-              </Alert>
-            )}
+
+            <Alert variant="filled" severity="error">
+              Error
+            </Alert>
+
             <FormProvider {...rhf}>
               <SignupForm onSubmit={onSubmit} />
             </FormProvider>

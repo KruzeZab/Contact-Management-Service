@@ -1,7 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import { useAppSelector } from "../app/hooks";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { Main } from "./Layout.utils";
@@ -20,8 +19,6 @@ const Layout = ({ children }: LayoutProps) => {
     return false;
   });
 
-  const { user } = useAppSelector((state) => state.auth);
-
   const drawerWidth = 280;
 
   const onDrawerToggle = () => {
@@ -30,16 +27,15 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <Box display="flex" flexDirection="column">
-      {user && (
-        <>
-          <Header open={open} onDrawerToggle={onDrawerToggle} />
-          <Sidebar
-            open={open}
-            onDrawerToggle={onDrawerToggle}
-            drawerWidth={drawerWidth}
-          />
-        </>
-      )}
+      <>
+        <Header open={open} onDrawerToggle={onDrawerToggle} />
+        <Sidebar
+          open={open}
+          onDrawerToggle={onDrawerToggle}
+          drawerWidth={drawerWidth}
+        />
+      </>
+
       <Main open={open} drawerwidth={drawerWidth}>
         {children}
       </Main>

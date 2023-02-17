@@ -8,7 +8,6 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 // Custom
 import store from "./app/store";
 import App from "./App";
-import AuthSuscriber from "./components/AuthSuscriber";
 import reportWebVitals from "./reportWebVitals";
 import theme from "./theme";
 
@@ -29,7 +28,6 @@ root.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AuthSuscriber />
         <App />
       </ThemeProvider>
     </Provider>

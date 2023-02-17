@@ -1,12 +1,5 @@
 import { Typography } from "@mui/material";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
 import { type FieldErrorsImpl } from "react-hook-form";
-import { db } from "../../../../firebase.config";
 
 export const passwordMessage = (
   errors: Partial<FieldErrorsImpl<Record<string, any>>>
@@ -85,16 +78,8 @@ export const emailValidate = {
     return true;
   },
 
-  unique: async (value: string) => {
-    const usersRef = collection(db, "users");
-    const q = query(
-      usersRef,
-      where("email", "==", value.toLowerCase())
-    );
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) return "Email is already in use";
-    return true;
-  },
+  // unique: async (value: string) => {
+  // },
 };
 
 export const passwordValidate = {

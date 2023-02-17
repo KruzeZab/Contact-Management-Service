@@ -16,7 +16,6 @@ import {
   emailValidate,
   passwordValidate,
 } from "../helpers/SigninHelpers";
-import { useAppSelector } from "../../../../app/hooks";
 
 interface SigninFormProps {
   onSubmit: (data: any) => void;
@@ -30,8 +29,6 @@ const SigninForm = (props: SigninFormProps) => {
     handleSubmit,
     formState: { errors },
   } = useFormContext();
-
-  const { loading } = useAppSelector((state) => state.auth);
 
   const [showPass, setShowPass] = useState(false);
 
@@ -100,7 +97,7 @@ const SigninForm = (props: SigninFormProps) => {
           variant="contained"
           color="primary"
           fullWidth
-          loading={loading}
+          // loading={loading}
         >
           Log In
         </LoadingButton>

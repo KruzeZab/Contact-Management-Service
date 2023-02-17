@@ -9,7 +9,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
-import { useAppSelector } from "../../../../app/hooks";
 import {
   emailValidate,
   fnameValidate,
@@ -32,8 +31,6 @@ const SignupForm = (props: SignupFormProps) => {
     setValue,
     formState: { errors },
   } = useFormContext();
-
-  const { loading } = useAppSelector((state) => state.auth);
 
   // State
   const [showPass, setShowPass] = useState(false);
@@ -167,7 +164,7 @@ const SignupForm = (props: SignupFormProps) => {
           variant="contained"
           size="small"
           disableElevation
-          loading={loading}
+          // loading={loading}
         >
           Create Account
         </LoadingButton>
